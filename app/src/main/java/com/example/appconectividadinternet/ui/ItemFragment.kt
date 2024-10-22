@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.appconectividadinternet.data.PokeIndividualInterface
 import com.example.appconectividadinternet.data.PokeTotalInterface
 import com.example.appconectividadinternet.data.remote.FirstDataPokemon
 import com.example.appconectividadinternet.data.remote.FirstPokemonGetData
@@ -51,11 +52,14 @@ class ItemFragment : Fragment() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         val llamada:PokeTotalInterface=retrofitxd.create(PokeTotalInterface::class.java)
+        val llamadaindividual:PokeIndividualInterface=retrofitxd.create(PokeIndividualInterface::class.java)
 
         viewmodel.viewModelScope.launch {
             println("hi")
             val data:FirstPokemonGetData=llamada.getUser().body()!!
             val pokemons: List<FirstDataPokemon> =data.results
+            val prueba=llamadaindividual.getPoke(pokemons[5].name).body()
+            println(prueba)
             binding.textoprueba.text=pokemons[5].name
         }
 
