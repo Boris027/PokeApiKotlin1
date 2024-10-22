@@ -10,9 +10,17 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.appconectividadinternet.data.PokeTotalInterface
+import com.example.appconectividadinternet.data.remote.FirstDataPokemon
+import com.example.appconectividadinternet.data.remote.FirstPokemonGetData
 import com.example.appconectividadinternet.databinding.FragmentItemListBinding
+import com.google.gson.JsonParser
+import com.squareup.moshi.JsonAdapter
+import com.squareup.moshi.Moshi
+
+
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 /**
@@ -32,7 +40,6 @@ class ItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=FragmentItemListBinding.inflate(inflater,container,false)
-        //val view = inflater.inflate(R.layout.fragment_item_list, container, false)
         val adapter= MyItemRecyclerViewAdapter(listOf(1,2,3,4,5,6,7,8,9,10,11))
         binding.recyclerview.layoutManager=LinearLayoutManager(this.context)
         binding.recyclerview.adapter=adapter
@@ -41,12 +48,15 @@ class ItemFragment : Fragment() {
 
         val retrofitxd=Retrofit.Builder()
             .baseUrl("https://pokeapi.co/api/v2/")
-            .addConverterFactory(ScalarsConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create())
             .build()
         val llamada:PokeTotalInterface=retrofitxd.create(PokeTotalInterface::class.java)
 
         viewmodel.viewModelScope.launch {
-            binding.textoprueba.text=llamada.getUser()
+            println("hi")
+            val data:FirstPokemonGetData=llamada.getUser().body()!!
+            val pokemons: List<FirstDataPokemon> =data.results
+            binding.textoprueba.text=pokemons[5].name
         }
 
 
