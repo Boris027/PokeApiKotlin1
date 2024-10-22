@@ -14,7 +14,7 @@ import com.example.appconectividadinternet.databinding.FragmentItemBinding
  * TODO: Replace the implementation with code for your data type.
  */
 class MyItemRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
+    private val values: List<Int>
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,7 +31,7 @@ class MyItemRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = values[position]
-        holder.idView.text = item.id
+        holder.idView.text = item.toString()
     }
 
     override fun getItemCount(): Int = values.size
