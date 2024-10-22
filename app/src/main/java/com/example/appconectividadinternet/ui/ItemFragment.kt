@@ -57,15 +57,13 @@ class ItemFragment : Fragment() {
             println("hi")
             val data:FirstPokemonGetData=llamada.getUser().body()!!
             val pokemons: List<FirstDataPokemon> =data.results
-            //val prueba: PokemonSingleGetData? =llamadaindividual.getPoke(pokemons[5].name).body()
 
             val listapokemon= mutableListOf<PokemonSingleGetData>()
 
             for (a in pokemons){
                 listapokemon.add(llamadaindividual.getPoke(a.name).body()!!)
             }
-            println(listapokemon[0])
-            binding.textoprueba.text=pokemons[5].name
+
 
 
             val adapter= MyItemRecyclerViewAdapter(listapokemon)
