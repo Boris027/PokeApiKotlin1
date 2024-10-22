@@ -5,6 +5,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface PokeTotalInterface {
-    @GET("pokemon?limit=100000&offset=0")
-    suspend fun getUser(): FirstPokemonGetData
+    @GET("pokemon?limit=10&offset=0")
+    suspend fun getUser(): String
 }
