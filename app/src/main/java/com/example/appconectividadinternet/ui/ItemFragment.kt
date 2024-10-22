@@ -13,6 +13,7 @@ import com.example.appconectividadinternet.data.PokeIndividualInterface
 import com.example.appconectividadinternet.data.PokeTotalInterface
 import com.example.appconectividadinternet.data.remote.FirstDataPokemon
 import com.example.appconectividadinternet.data.remote.FirstPokemonGetData
+import com.example.appconectividadinternet.data.remote.PokemonSingleGetData
 import com.example.appconectividadinternet.databinding.FragmentItemListBinding
 import com.google.gson.JsonParser
 import com.squareup.moshi.JsonAdapter
@@ -41,9 +42,7 @@ class ItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding=FragmentItemListBinding.inflate(inflater,container,false)
-        val adapter= MyItemRecyclerViewAdapter(listOf(1,2,3,4,5,6,7,8,9,10,11))
-        binding.recyclerview.layoutManager=LinearLayoutManager(this.context)
-        binding.recyclerview.adapter=adapter
+
 
 
 
@@ -58,9 +57,20 @@ class ItemFragment : Fragment() {
             println("hi")
             val data:FirstPokemonGetData=llamada.getUser().body()!!
             val pokemons: List<FirstDataPokemon> =data.results
-            val prueba=llamadaindividual.getPoke(pokemons[5].name).body()
-            println(prueba)
+            //val prueba: PokemonSingleGetData? =llamadaindividual.getPoke(pokemons[5].name).body()
+
+            val listapokemon= mutableListOf<PokemonSingleGetData>()
+
+            for (a in pokemons){
+                listapokemon.add(llamadaindividual.getPoke(a.name).body()!!)
+            }
+            println(listapokemon[0])
             binding.textoprueba.text=pokemons[5].name
+
+
+            val adapter= MyItemRecyclerViewAdapter(listapokemon)
+            binding.recyclerview.layoutManager=LinearLayoutManager(context)
+            binding.recyclerview.adapter=adapter
         }
 
 
