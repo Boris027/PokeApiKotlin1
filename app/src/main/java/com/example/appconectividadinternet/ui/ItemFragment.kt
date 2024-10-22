@@ -1,17 +1,14 @@
-package com.example.appconectividadinternet
+package com.example.appconectividadinternet.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.appconectividadinternet.databinding.FragmentItemBinding
+import com.example.appconectividadinternet.data.PokeTotalInterface
 import com.example.appconectividadinternet.databinding.FragmentItemListBinding
-import com.example.appconectividadinternet.placeholder.PlaceholderContent
-import com.example.appconectividadinternet.placeholder.PlaceholderContent.PlaceholderItem
+import retrofit2.Retrofit
 
 /**
  * A fragment representing a list of Items.
@@ -34,8 +31,13 @@ class ItemFragment : Fragment() {
         val adapter= MyItemRecyclerViewAdapter(listOf(1,2,3,4,5,6,7,8,9,10,11))
         binding.recyclerview.layoutManager=LinearLayoutManager(this.context)
         binding.recyclerview.adapter=adapter
-
-
+        /*
+        val retrofitxd=Retrofit.Builder()
+            .baseUrl("https://pokeapi.co/api/v2/")
+            .addConverterFactory()
+            .build()
+        val llamada:PokeTotalInterface=retrofitxd.create(PokeTotalInterface::class.java)
+        */
         return binding.root
     }
 
