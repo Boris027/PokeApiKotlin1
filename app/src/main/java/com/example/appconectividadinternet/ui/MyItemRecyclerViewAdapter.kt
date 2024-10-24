@@ -8,7 +8,6 @@ import android.widget.TextView
 import coil3.load
 import com.example.appconectividadinternet.data.remote.PokemonSingleGetData
 
-import com.example.appconectividadinternet.placeholder.PlaceholderContent.PlaceholderItem
 import com.example.appconectividadinternet.databinding.FragmentItemBinding
 
 /**

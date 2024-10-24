@@ -1,13 +1,18 @@
 package com.example.appconectividadinternet.ui
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewModelScope
 import com.example.appconectividadinternet.data.PokeIndividualInterface
 import com.example.appconectividadinternet.data.PokeTotalInterface
@@ -18,6 +23,8 @@ import com.example.appconectividadinternet.databinding.FragmentItemListBinding
 import com.google.gson.JsonParser
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.lifecycle.HiltViewModel
 
 
 import kotlinx.coroutines.launch
@@ -28,49 +35,48 @@ import retrofit2.converter.scalars.ScalarsConverterFactory
 /**
  * A fragment representing a list of Items.
  */
+@AndroidEntryPoint
 class ItemFragment : Fragment() {
 
 
     private lateinit var binding: FragmentItemListBinding
     private var taskId:Int?=null
     private var columnCount = 1
-    private val viewmodel:ItemFragmentViewModel by viewModels()
+    private val viewModel:ItemFragmentViewModel by viewModels()
 
 
+    @SuppressLint("UnsafeRepeatOnLifecycleDetector")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding=FragmentItemListBinding.inflate(inflater,container,false)
+        binding = FragmentItemListBinding.inflate(inflater, container, false)
 
 
 
+        binding.recyclerview.layoutManager = LinearLayoutManager(context)
 
-        val retrofitxd=Retrofit.Builder()
-            .baseUrl("https://pokeapi.co/api/v2/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-        val llamada:PokeTotalInterface=retrofitxd.create(PokeTotalInterface::class.java)
-        val llamadaindividual:PokeIndividualInterface=retrofitxd.create(PokeIndividualInterface::class.java)
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.uiState.collect { uiState ->
+                    when (uiState) {
+                        is PokemonUiState.Error -> {
+                            Toast.makeText(requireContext(), uiState.message, Toast.LENGTH_SHORT).show()
+                        }
 
-        viewmodel.viewModelScope.launch {
-            println("hi")
-            val data:FirstPokemonGetData=llamada.getUser().body()!!
-            val pokemons: List<FirstDataPokemon> =data.results
+                        PokemonUiState.Loading -> {
+                            Toast.makeText(requireContext(), "Cargando contenido", Toast.LENGTH_SHORT).show()
+                        }
 
-            val listapokemon= mutableListOf<PokemonSingleGetData>()
-
-            for (a in pokemons){
-                listapokemon.add(llamadaindividual.getPoke(a.name).body()!!)
+                        is PokemonUiState.Success -> {
+                            val adapter = MyItemRecyclerViewAdapter(uiState.pokemons)
+                            binding.recyclerview.adapter = adapter
+                            Toast.makeText(requireContext(), "Cargado con éxito", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
-
-
-
-            val adapter= MyItemRecyclerViewAdapter(listapokemon)
-            binding.recyclerview.layoutManager=LinearLayoutManager(context)
-            binding.recyclerview.adapter=adapter
         }
-
 
 
 
