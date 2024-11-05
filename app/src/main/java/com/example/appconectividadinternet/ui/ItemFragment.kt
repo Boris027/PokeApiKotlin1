@@ -16,6 +16,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.lifecycle.viewModelScope
 import com.example.appconectividadinternet.data.PokeIndividualInterface
 import com.example.appconectividadinternet.data.PokeTotalInterface
+import com.example.appconectividadinternet.data.local.PokemonLocalDatabase
 import com.example.appconectividadinternet.data.remote.FirstDataPokemon
 import com.example.appconectividadinternet.data.remote.FirstPokemonGetData
 import com.example.appconectividadinternet.data.remote.PokemonSingleGetData

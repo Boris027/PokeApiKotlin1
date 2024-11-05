@@ -2,6 +2,7 @@ package com.example.appconectividadinternet.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.appconectividadinternet.data.local.PokemonLocalDao
 import com.example.appconectividadinternet.data.remote.PokemonRepository
 import com.example.appconectividadinternet.data.remote.PokemonSingleGetData
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +15,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ItemFragmentViewModel @Inject constructor(
-    private val pokemonRepository: PokemonRepository
+    private val pokemonRepository: PokemonRepository,
+    private val pokemonLocalDao: PokemonLocalDao
+
 ):ViewModel() {
 
     private val _uiState = MutableStateFlow<PokemonUiState>(PokemonUiState.Loading)
@@ -29,6 +32,8 @@ class ItemFragmentViewModel @Inject constructor(
                 pokemons -> if (pokemons.isEmpty()) {
                     _uiState.value=PokemonUiState.Error("No hay pokemons disponibles")
                 }else{
+                    //pokemonLocalDao.insertar((99999,"LOLO","asda"))
+                    //pokemonLocalDao.getall()
                     _uiState.value=PokemonUiState.Success(pokemons)
                 }
             }

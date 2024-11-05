@@ -4,25 +4,29 @@ import android.content.Context
 import androidx.room.Room
 import com.example.appconectividadinternet.data.local.PokemonLocalDao
 import com.example.appconectividadinternet.data.local.PokemonLocalDatabase
-import com.example.appconectividadinternet.data.remote.PokemonRemoteRepository
-import com.example.appconectividadinternet.data.remote.PokemonRepository
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class RepositoryModule {
+class PokemonModule {
 
-    @Binds
-    @Singleton
-    abstract fun bindPokemonRepository(pokemonRemoteRepository: PokemonRemoteRepository):PokemonRepository
+    @Provides
+    fun providePokemonLocalDatabase(
+        @ApplicationContext context: Context
+    ): PokemonLocalDatabase {
+        return Room.databaseBuilder(
+            context,
+            PokemonLocalDatabase::class.java,
+            "pokemon_local_database"
+        ).build()
+    }
 
-
-
-
+    @Provides
+    fun providePokemonLocalDao(database: PokemonLocalDatabase): PokemonLocalDao {
+        return database.PokemonDao()
+    }
 }
