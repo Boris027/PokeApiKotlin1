@@ -10,7 +10,7 @@ import javax.inject.Inject
 import com.example.appconectividadinternet.data.toPokemon
 
 
-class PokemonRemoteRepository @Inject constructor(): PokemonRepository {
+class PokemonRemoteRepository @Inject constructor(): PokemonRepositoryRemoteInterface {
 
     private var _pokemon= mutableListOf<Pokemon>()
     private val _pokemonStream=MutableStateFlow<List<Pokemon>>(_pokemon.toList())

@@ -33,6 +33,14 @@ import com.example.appconectividadinternet.data.remote.PokemonSingleGetData
         )
     }
 
+    fun Pokemon.toLocalEntity():PokemonLocalEntity{
+        return PokemonLocalEntity(
+            id=this.id,
+            name = this.name,
+            image = this.image
+        )
+    }
+
 
 
     fun PokemonSingleGetData.toPokemon():Pokemon{

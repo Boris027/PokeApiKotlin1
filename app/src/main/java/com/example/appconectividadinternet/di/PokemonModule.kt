@@ -1,5 +1,6 @@
 package com.example.appconectividadinternet.di
 
+import android.app.Application
 import android.content.Context
 import androidx.room.Room
 import com.example.appconectividadinternet.data.local.PokemonLocalDao
@@ -30,5 +31,11 @@ class PokemonModule {
     @Provides
     fun providePokemonLocalDao(database: PokemonLocalDatabase): PokemonLocalDao {
         return database.PokemonDao()
+    }
+
+    @Provides
+    @Singleton
+    fun provideApplicationContext(application: Application): Context {
+        return application.applicationContext
     }
 }
