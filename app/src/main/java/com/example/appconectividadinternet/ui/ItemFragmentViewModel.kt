@@ -2,14 +2,14 @@ package com.example.appconectividadinternet.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.appconectividadinternet.data.Pokemon
 import com.example.appconectividadinternet.data.local.PokemonLocalDao
-import com.example.appconectividadinternet.data.remote.PokemonRepository
+import com.example.appconectividadinternet.data.PokemonRepository
 import com.example.appconectividadinternet.data.remote.PokemonSingleGetData
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -32,8 +32,11 @@ class ItemFragmentViewModel @Inject constructor(
                 pokemons -> if (pokemons.isEmpty()) {
                     _uiState.value=PokemonUiState.Error("No hay pokemons disponibles")
                 }else{
-                    //pokemonLocalDao.insertar((99999,"LOLO","asda"))
-                    //pokemonLocalDao.getall()
+                    //var hola:Pokemon=Pokemon(20000,"LOLO","www.com")
+                    //pokemonLocalDao.insertar(hola)
+                    pokemonLocalDao.getall()
+                    println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+                    println(pokemonLocalDao.getall())
                     _uiState.value=PokemonUiState.Success(pokemons)
                 }
             }
@@ -47,6 +50,6 @@ class ItemFragmentViewModel @Inject constructor(
 }
 sealed class PokemonUiState {
     data object Loading:PokemonUiState()
-    class Success(val pokemons:List<PokemonSingleGetData>):PokemonUiState()
+    class Success(val pokemons:List<Pokemon>):PokemonUiState()
     class Error(val message:String):PokemonUiState()
 }

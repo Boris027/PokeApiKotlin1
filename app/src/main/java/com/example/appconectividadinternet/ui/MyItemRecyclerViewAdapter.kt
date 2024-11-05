@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import coil3.load
+import com.example.appconectividadinternet.data.Pokemon
 import com.example.appconectividadinternet.data.remote.PokemonSingleGetData
 
 import com.example.appconectividadinternet.databinding.FragmentItemBinding
@@ -15,7 +16,7 @@ import com.example.appconectividadinternet.databinding.FragmentItemBinding
  * TODO: Replace the implementation with code for your data type.
  */
 class MyItemRecyclerViewAdapter(
-    private val values: List<PokemonSingleGetData>
+    private val values: List<Pokemon>
 ) : RecyclerView.Adapter<MyItemRecyclerViewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,9 +32,9 @@ class MyItemRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item:PokemonSingleGetData = values[position]
+        val item:Pokemon = values[position]
         holder.idView.text = item.name
-        holder.img.load(item.sprites.front_default)
+        holder.img.load(item.image)
     }
 
     override fun getItemCount(): Int = values.size

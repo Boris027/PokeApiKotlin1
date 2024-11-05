@@ -10,28 +10,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import androidx.lifecycle.viewModelScope
-import com.example.appconectividadinternet.data.PokeIndividualInterface
-import com.example.appconectividadinternet.data.PokeTotalInterface
-import com.example.appconectividadinternet.data.local.PokemonLocalDatabase
-import com.example.appconectividadinternet.data.remote.FirstDataPokemon
-import com.example.appconectividadinternet.data.remote.FirstPokemonGetData
-import com.example.appconectividadinternet.data.remote.PokemonSingleGetData
 import com.example.appconectividadinternet.databinding.FragmentItemListBinding
-import com.google.gson.JsonParser
-import com.squareup.moshi.JsonAdapter
-import com.squareup.moshi.Moshi
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.lifecycle.HiltViewModel
 
 
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 
 /**
  * A fragment representing a list of Items.
